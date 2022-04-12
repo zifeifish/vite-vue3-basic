@@ -1,15 +1,22 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 defineProps<{ msg: string }>()
 
 const count = ref(0)
-const increase = ()=> {
+const increase = () => {
   count.value++
 }
-const doubleCount = computed(()=>{
+const doubleCount = computed(() => {
   // 计算属性记得return出去
   return count.value * 2
+})
+
+
+// 监听多个值用数组形式[value1,value2,...]
+watch([count, doubleCount], (newValue, oldValue) => {
+  document.title = 'hello' + count.value
+  console.log(newValue, oldValue)
 })
 </script>
 

@@ -1,6 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import { useMousePosition } from '../hooks';
+import { ref, computed, watch, onMounted } from 'vue'
+import { useMousePosition, useUrlLoader } from '../hooks';
+
+interface DogRes {
+  message: string,
+  status: string
+}
 
 defineProps<{ msg: string }>()
 
@@ -23,6 +28,17 @@ watch([count, doubleCount], (newValue, oldValue) => {
 
 const { pageX, pageY } = useMousePosition()
 
+const {
+  result,
+  loading,
+  loaded
+} = useUrlLoader<DogRes>('https://dog.ceo/api/breeds/image/random')
+
+const changeDog = () => {
+  const userlLoader = useUrlLoader<DogRes>('https://dog.ceo/api/breeds/image/random')
+  result.value = userlLoader.result
+
+}
 </script>
 
 <template>
@@ -40,6 +56,14 @@ const { pageX, pageY } = useMousePosition()
   <h2>double count: {{ doubleCount }}</h2>
 
   <h2>pageX: {{ pageX }} pageY: {{ pageY }}</h2>
+
+  <h1 v-if="loading">loaing...</h1>
+  <div v-if="loaded">
+    <img :src="result.message" alt="dog">
+  </div>
+  <div>
+    <button type="button" @click="changeDog"></button>
+  </div>
 
   <button type="button" @click="increase">count is: {{ count }}</button>
 

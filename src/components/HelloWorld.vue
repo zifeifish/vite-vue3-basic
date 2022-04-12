@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 defineProps<{ msg: string }>()
 
 const count = ref(0)
+const increase = ()=> {
+  count.value++
+}
+const doubleCount = computed(()=>{
+  // 计算属性记得return出去
+  return count.value * 2
+})
 </script>
 
 <template>
@@ -17,7 +24,10 @@ const count = ref(0)
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
   </p>
 
-  <button type="button" @click="count++">count is: {{ count }}</button>
+  <h2>count: {{ count }}</h2>
+  <h2>double count: {{ doubleCount }}</h2>
+
+  <button type="button" @click="increase">count is: {{ count }}</button>
 
 </template>
 

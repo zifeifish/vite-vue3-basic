@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
+import { useMousePosition } from '../hooks';
 
 defineProps<{ msg: string }>()
 
@@ -7,6 +8,7 @@ const count = ref(0)
 const increase = () => {
   count.value++
 }
+
 const doubleCount = computed(() => {
   // 计算属性记得return出去
   return count.value * 2
@@ -18,6 +20,9 @@ watch([count, doubleCount], (newValue, oldValue) => {
   document.title = 'hello' + count.value
   console.log(newValue, oldValue)
 })
+
+const { pageX, pageY } = useMousePosition()
+
 </script>
 
 <template>
@@ -33,6 +38,8 @@ watch([count, doubleCount], (newValue, oldValue) => {
 
   <h2>count: {{ count }}</h2>
   <h2>double count: {{ doubleCount }}</h2>
+
+  <h2>pageX: {{ pageX }} pageY: {{ pageY }}</h2>
 
   <button type="button" @click="increase">count is: {{ count }}</button>
 

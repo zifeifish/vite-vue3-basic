@@ -1,12 +1,34 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+import Modal from './components/Modal.vue'
 import HelloWorld from './components/HelloWorld.vue'
+
+export default defineComponent({
+  components: { Modal, HelloWorld },
+  setup() {
+    const modalIsOpen = ref(false)
+    const openModal = () => {
+      modalIsOpen.value = true
+    }
+    const onModalClose = () => {
+      modalIsOpen.value = false
+    }
+    return {
+      modalIsOpen,
+      openModal,
+      onModalClose
+    }
+  }
+})
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <div>
+    <img alt="Vue logo" src="./assets/logo.png" /><br>
+    <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" /><br>
+    <button style="margin-top:10px;" @click="openModal">open modal</button> <br>
+    <Modal :isOpen="modalIsOpen" @close-modal="onModalClose">my modal !!!!</Modal>
+  </div>
 </template>
 
 <style>

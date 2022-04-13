@@ -34,11 +34,6 @@ const {
   loaded
 } = useUrlLoader<DogRes>('https://dog.ceo/api/breeds/image/random')
 
-const changeDog = () => {
-  const userlLoader = useUrlLoader<DogRes>('https://dog.ceo/api/breeds/image/random')
-  result.value = userlLoader.result
-
-}
 </script>
 
 <template>
@@ -57,12 +52,9 @@ const changeDog = () => {
 
   <h2>pageX: {{ pageX }} pageY: {{ pageY }}</h2>
 
-  <h1 v-if="loading">loaing...</h1>
+  <h1 v-if="loading">loading...</h1>
   <div v-if="loaded">
     <img :src="result.message" alt="dog">
-  </div>
-  <div>
-    <button type="button" @click="changeDog"></button>
   </div>
 
   <button type="button" @click="increase">count is: {{ count }}</button>

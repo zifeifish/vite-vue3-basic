@@ -8,12 +8,13 @@
             <h2>
                 <slot>this is a modal</slot>
             </h2>
+            <h2>modalIsOpen: {{ modalIsOpen }}</h2>
             <button @click="buttonClick">Close</button>
         </div>
     </teleport>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, inject } from 'vue'
 export default defineComponent({
     props: {
         isOpen: Boolean,
@@ -22,11 +23,14 @@ export default defineComponent({
         'close-modal': null
     },
     setup(props, context) {
+        // inject 拿到provide提供的数据
+        const modalIsOpen = inject('modalIsOpen')
         const buttonClick = () => {
             context.emit('close-modal')
         }
         return {
-            buttonClick
+            buttonClick,
+            modalIsOpen
         }
     }
 })
